@@ -81,10 +81,22 @@ List >> collect: aFullBlockClosure [
 	node := begin.
 	 
 	1 to: self size do: [ :i |
-		map add: (node value * 10).
+		map add: (aFullBlockClosure value: node value).
 		node := node nextNode ].
 	
 	^ map
+]
+
+{ #category : #setting }
+List >> do: aFullBlockClosure [ 
+	
+	| node |
+	
+	node := begin.
+	
+	1 to: self size do: [ :i |
+		node value: (aFullBlockClosure value: node value).
+		node := node nextNode ].
 ]
 
 { #category : #getting }
@@ -134,6 +146,21 @@ List >> removeAt: anIndex [
 	
 	anIndex = self size ifTrue: [ end := prevNode ].
 	anIndex = 1 ifTrue: [ begin := nextNode ]
+]
+
+{ #category : #filtering }
+List >> select: aFullBlockClosure [ 
+	
+	| selection node |
+	
+	selection := List new.
+	node := begin.
+	
+	1 to: self size do: [ :i |
+		(aFullBlockClosure value: node value) ifTrue: [ selection add: node ].
+		node := node nextNode ].
+	
+	^ selection
 ]
 
 { #category : #getting }

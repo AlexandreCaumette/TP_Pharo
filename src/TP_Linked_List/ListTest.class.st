@@ -134,7 +134,7 @@ ListTest >> testCollect [
 	list add: 1.
 	list add: 2.
 	
-	map := list collect: [ :i | ^ i * 10 ].
+	map := list collect: [ :value | ^ value * 10 ].
 	
 	result := List new.
 	result add: 10.
@@ -143,6 +143,47 @@ ListTest >> testCollect [
 	self assert: map size equals: result size.
 	self assert: map begin equals: result begin.
 	self assert: map end equals: result end.
+]
+
+{ #category : #tests }
+ListTest >> testCollectEmpty [
+			
+	| list map |
+	
+	list := List new.
+	
+	map := list collect: [ :value | ^ value * 10 ].
+	
+	self assert: map isEmpty equals: true.
+]
+
+{ #category : #tests }
+ListTest >> testDo [
+			
+	| list |
+	
+	list := List new.
+	list add: 1.
+	list add: 2.
+	list add: 3.
+	
+	list do: [ :value | ^ value * (-1) ].
+	
+	self assert: list size equals: 2.
+	self assert: list begin equals: -1.
+	self assert: list end equals: -3.
+]
+
+{ #category : #tests }
+ListTest >> testDoEmpty [
+			
+	| list |
+	
+	list := List new.
+	
+	list do: [ :value | ^ value * (-1) ].
+	
+	self assert: list isEmpty equals: true
 ]
 
 { #category : #tests }
@@ -212,6 +253,40 @@ ListTest >> testRemoveAtEnd [
 	
 	self assert: list size equals: 2.
 	self assert: (list at: 2) equals: 3
+]
+
+{ #category : #tests }
+ListTest >> testSelect [
+			
+	| list selection result |
+	
+	list := List new.
+	list add: 1.
+	list add: 2.
+	list add: 3.
+	list add: 4.
+	
+	selection := list select: [ :value | ^ value odd ].
+	
+	result := List new.
+	result add: 2.
+	result add: 4.
+	
+	self assert: selection size equals: result size.
+	self assert: selection begin equals: result begin.
+	self assert: selection end equals: result end.
+]
+
+{ #category : #tests }
+ListTest >> testSelectEmpty [
+			
+	| list selection |
+	
+	list := List new.
+	
+	selection := list select: [ :value | ^ value odd ].
+	
+	self assert: selection isEmpty equals: true.
 ]
 
 { #category : #tests }
