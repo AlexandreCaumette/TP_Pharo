@@ -87,6 +87,20 @@ List >> collect: aFullBlockClosure [
 	^ map
 ]
 
+{ #category : #filtering }
+List >> detect: aFullBlockClosure [ 
+	
+	| node |
+	
+	node := begin.
+	
+	1 to: self size do: [ :i |
+		(aFullBlockClosure value: node value) ifTrue: [ ^ node value ].
+		node := node nextNode ].
+	
+	^ NulValue new
+]
+
 { #category : #setting }
 List >> do: aFullBlockClosure [ 
 	
@@ -126,6 +140,21 @@ List >> initialize [
 { #category : #getting }
 List >> isEmpty [
 	^ (begin class = NulNode) & (end class = NulNode)
+]
+
+{ #category : #filtering }
+List >> reject: aFullBlockClosure [ 
+	
+	| selection node |
+	
+	selection := List new.
+	node := begin.
+	
+	1 to: self size do: [ :i |
+		(aFullBlockClosure value: node value) ifFalse: [ selection add: node ].
+		node := node nextNode ].
+	
+	^ selection
 ]
 
 { #category : #setting }

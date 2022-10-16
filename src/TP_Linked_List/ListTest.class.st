@@ -158,6 +158,34 @@ ListTest >> testCollectEmpty [
 ]
 
 { #category : #tests }
+ListTest >> testDetect [
+			
+	| list result |
+	
+	list := List new.
+	list add: 1.
+	list add: 2.
+	list add: 3.
+	list add: 4.
+	
+	result := list detect: [ :value | ^ value odd ].
+	
+	self assert: result equals: 2.
+]
+
+{ #category : #tests }
+ListTest >> testDetectEmpty [
+			
+	| list result |
+	
+	list := List new.
+	
+	result := list detect: [ :value | ^ value odd ].
+	
+	self assert: result class equals: NulValue
+]
+
+{ #category : #tests }
 ListTest >> testDo [
 			
 	| list |
@@ -205,6 +233,36 @@ ListTest >> testIsEmpty [
 	| list |
 	list := List new.
 	self assert: list isEmpty equals: true
+]
+
+{ #category : #tests }
+ListTest >> testReject [
+			
+	| list selection |
+	
+	list := List new.
+	list add: 1.
+	list add: 2.
+	list add: 3.
+	list add: 4.
+	
+	selection := list reject: [ :value | ^ value odd ].
+	
+	self assert: selection size equals: 2.
+	self assert: selection begin equals: 1.
+	self assert: selection end equals: 3.
+]
+
+{ #category : #tests }
+ListTest >> testRejectEmpty [
+			
+	| list selection |
+	
+	list := List new.
+	
+	selection := list reject: [ :value | ^ value odd ].
+	
+	self assert: selection isEmpty equals: true.
 ]
 
 { #category : #tests }

@@ -27,6 +27,10 @@ Node >> initialize [
 	"scope: class-variables  &  instance-variables"	
 			
 	super initialize.
+	
+	value := NulValue.
+	prevNode := NulNode.
+	nextNode := NulNode.
 ]
 
 { #category : #getting }
